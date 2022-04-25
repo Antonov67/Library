@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -13,20 +14,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class Database extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String DB_NAME = "library.db";
     private static String DB_PATH = "";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 5;
 
     private SQLiteDatabase mDataBase;
     private final Context mContext;
     private boolean mNeedUpdate = false;
 
-    public Database(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DB_NAME, factory, DB_VERSION);
-        if (android.os.Build.VERSION.SDK_INT >= 21)
+    public DatabaseHelper(@Nullable Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+        if (android.os.Build.VERSION.SDK_INT >= 17) {
             DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
+            Log.d("lib777",DB_PATH);
+        }
         else
             DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
         this.mContext = context;
@@ -58,6 +61,7 @@ public class Database extends SQLiteOpenHelper {
             this.getReadableDatabase();
             this.close();
             try {
+                Log.d("lib777", "copy");
                 copyDBFile();
             } catch (IOException mIOException) {
                 throw new Error("ErrorCopyingDataBase");
