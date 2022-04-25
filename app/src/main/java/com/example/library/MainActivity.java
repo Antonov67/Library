@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         try {
             databaseHelper.updateDataBase();
-            Log.d("lib777","db connect");
+            Log.d("lib777","db update");
         } catch (IOException e) {
             e.printStackTrace();
         }
