@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String DB_NAME = "library.db";
     private static String DB_PATH = "";
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 9;
 
     private SQLiteDatabase mDataBase;
     private final Context mContext;
@@ -28,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
         if (android.os.Build.VERSION.SDK_INT >= 17) {
             DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
-            Log.d("lib777",DB_PATH);
+          
         }
         else
             DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";

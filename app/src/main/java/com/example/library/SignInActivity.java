@@ -43,11 +43,9 @@ public class SignInActivity extends AppCompatActivity {
                     User user = new User(login.getText().toString(),
                             pswrd.getText().toString());
                     if (!user.isUserUniq(context)){
-                        Log.d("lib777", "юзер есть");
-                        startActivity(new Intent(SignInActivity.this,MainActivity.class));
+                       startActivity(new Intent(SignInActivity.this,MainActivity.class));
                     }else {
-                        Log.d("lib777", "вошли");
-                        Toast.makeText(getApplicationContext(), "Ошибка входа", Toast.LENGTH_LONG).show();
+                       Toast.makeText(getApplicationContext(), "Ошибка входа", Toast.LENGTH_LONG).show();
                     }
                 }
             }
