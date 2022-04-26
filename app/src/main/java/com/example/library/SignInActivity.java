@@ -17,6 +17,7 @@ public class SignInActivity extends AppCompatActivity {
     Button signInButton;
     EditText login;
     EditText pswrd;
+    Button signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,15 @@ public class SignInActivity extends AppCompatActivity {
         signInButton = findViewById(R.id.signInButton);
         login = findViewById(R.id.loginField);
         pswrd = findViewById(R.id.pswrdField);
+        signUpButton = findViewById(R.id.signUpButton);
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignInActivity.this,SignUpActivity.class));
+            }
+        });
+
         Context context = this;
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +47,7 @@ public class SignInActivity extends AppCompatActivity {
                         startActivity(new Intent(SignInActivity.this,MainActivity.class));
                     }else {
                         Log.d("lib777", "вошли");
+                        Toast.makeText(getApplicationContext(), "Ошибка входа", Toast.LENGTH_LONG).show();
                     }
                 }
             }

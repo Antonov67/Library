@@ -72,7 +72,6 @@ public class User {
             cursor.moveToNext();
         }
         cursor.close();
-
         return isUniq;
     }
 }
