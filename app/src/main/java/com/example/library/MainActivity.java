@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterForMainActivity.ItemClickListener {
-
+    ArrayList<Book> bookList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
 
         String sql = "SELECT * FROM books";
         Cursor cursor = DB.getDataFromBD(sql, this);
-        ArrayList<Book> bookList = new ArrayList<>();
+        bookList = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             boolean wish = false;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
 
     @Override
     public void onItemClick(View view, int position) {
-
+        Intent intent = new Intent(MainActivity.this, BookActivity.class);
+        intent.putExtra("book", bookList.get(position));
+        startActivity(intent);
     }
 }

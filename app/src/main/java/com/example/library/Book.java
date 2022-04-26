@@ -1,10 +1,17 @@
 package com.example.library;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private int id;
     private String title;
     private String author;
     private String annotation;
+
+    public void setWish(boolean wish) {
+        this.wish = wish;
+    }
+
     private int pageCount;
     private String yearOfPubl;
     private boolean wish;
