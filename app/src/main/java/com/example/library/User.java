@@ -74,4 +74,20 @@ public class User {
         cursor.close();
         return isUniq;
     }
+
+    //метод проверки существования юзера в системе по логину и паролю
+    public boolean isUserExist(Context context){
+        boolean isExist = false;
+        String sql = "SELECT * FROM users";
+        Cursor cursor = DB.getDataFromBD(sql, context);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            if (cursor.getString(1).equals(this.login) && cursor.getString(2).equals(this.pswrd)){
+                isExist = true;
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return isExist;
+    }
 }

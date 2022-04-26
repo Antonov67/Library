@@ -42,7 +42,7 @@ public class SignInActivity extends AppCompatActivity {
                 if (!login.getText().toString().equals("")){
                     User user = new User(login.getText().toString(),
                             pswrd.getText().toString());
-                    if (!user.isUserUniq(context)){
+                    if (user.isUserExist(context)){
                        startActivity(new Intent(SignInActivity.this,MainActivity.class));
                     }else {
                        Toast.makeText(getApplicationContext(), "Ошибка входа", Toast.LENGTH_LONG).show();
