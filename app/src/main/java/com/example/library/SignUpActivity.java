@@ -3,6 +3,7 @@ package com.example.library;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,8 +38,9 @@ public class SignUpActivity extends AppCompatActivity {
                         && !fio.getText().toString().equals("")
                         && pswrd1.getText().toString().equals(pswrd2.getText().toString())){
                     if (user.isUserUniq(context)){
-                       DB.addUser(user,context);
+                        DB.addUser(user,context);
                         Toast.makeText(getApplicationContext(),"Пользователь успешно добавлен",Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
                     }else{
                         Toast.makeText(getApplicationContext(),"Такой логин уже существует",Toast.LENGTH_LONG).show();
                     }
