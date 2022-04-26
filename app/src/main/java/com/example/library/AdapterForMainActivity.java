@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,9 +19,11 @@ public class AdapterForMainActivity extends RecyclerView.Adapter<AdapterForMainA
     private ArrayList<Book> list;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context context;
 
 
     public AdapterForMainActivity(ArrayList<Book> list, Context context) {
+        this.context = context;
         this.list = list;
         this.mInflater = LayoutInflater.from(context);
 
@@ -29,9 +32,9 @@ public class AdapterForMainActivity extends RecyclerView.Adapter<AdapterForMainA
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = mInflater.inflate(R.layout.layout_item_main,parent,false);
         return new ViewHolder(view);
+
     }
 
     @Override
@@ -66,15 +69,26 @@ public class AdapterForMainActivity extends RecyclerView.Adapter<AdapterForMainA
         public ViewHolder(@NonNull View itemView) {
 
             super(itemView);
-            Log.d("lib777", "777");
             id = (TextView) itemView.findViewById(R.id.idMain);
-            Log.d("lib777", "888");
             title = itemView.findViewById(R.id.titleMain);
             author = itemView.findViewById(R.id.authorMain);
             annotation = itemView.findViewById(R.id.annotationMain);
             pages = itemView.findViewById(R.id.pagesMain);
             year = itemView.findViewById(R.id.yearMain);
             wish = itemView.findViewById(R.id.wishMain);
+            wish.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                   if (wish.isChecked()){
+
+                       DB.updateBook(list.get(getAdapterPosition()).getId(),"yes",context);
+                    }else {
+
+                       DB.updateBook(list.get(getAdapterPosition()).getId(),"no",context);
+                   }
+
+                }
+            });
             itemView.setOnClickListener(this);
 
         }
@@ -82,6 +96,7 @@ public class AdapterForMainActivity extends RecyclerView.Adapter<AdapterForMainA
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+
         }
     }
 

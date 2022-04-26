@@ -44,4 +44,21 @@ public class DB {
         newValues.put("adress", user.getFio());
         bd.insert("users", null, newValues);
     }
+
+    //UPDATE запрос для обновления данных в БД
+    public static void updateBook(int id, String wish, Context context){
+        DatabaseHelper databaseHelper;
+        SQLiteDatabase bd;
+        databaseHelper = new DatabaseHelper(context);
+        try {
+            databaseHelper.updateDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bd = databaseHelper.getReadableDatabase();
+        ContentValues newValues = new ContentValues();
+        newValues.put("wish", wish);
+        int updCount = bd.update("books",newValues,"id = ?", new String[]{String.valueOf(id)});
+
+    }
 }
