@@ -10,9 +10,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,11 +25,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterForMainActivity.ItemClickListener {
     ArrayList<Book> bookList;
+    EditText searchField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         String sql = "SELECT * FROM books";
         Cursor cursor = DB.getDataFromBD(sql, this);
@@ -58,6 +64,25 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
        adapter.setClickListener(this);
        recyclerView.setAdapter(adapter);
 
+        searchField = findViewById(R.id.searchField);
+        searchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                bookList = queryBookList(charSequence);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
     }
 
 
@@ -66,5 +91,10 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
         Intent intent = new Intent(MainActivity.this, BookActivity.class);
         intent.putExtra("book", bookList.get(position));
         startActivity(intent);
+    }
+
+    public ArrayList<Book> queryBookList(CharSequence charSequence){
+        return new ArrayList<Book>();
+
     }
 }
