@@ -32,17 +32,9 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
     static ArrayList<Book> totalList = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        addBook = findViewById(R.id.addBookButton);
-        addBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,AddBookActivity.class));
-            }
-        });
-
+    protected void onStart() {
+        super.onStart();
+        Log.d("lib777","Start");
         String sql = "SELECT * FROM books";
         Cursor cursor = DB.getDataFromBD(sql, this);
         bookList = new ArrayList<>();
@@ -66,12 +58,12 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
         cursor.close();
 
 
-       RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listView);
-       recyclerView.setLayoutManager(new LinearLayoutManager(this));
-       AdapterForMainActivity adapter = new AdapterForMainActivity(bookList,this);
-       recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-       adapter.setClickListener(this);
-       recyclerView.setAdapter(adapter);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        AdapterForMainActivity adapter = new AdapterForMainActivity(bookList,this);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
 
         //сохраним данные для возврата полного набора данных при необходимости
         totalList.addAll(bookList);
@@ -98,6 +90,21 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
 
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        addBook = findViewById(R.id.addBookButton);
+        addBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,AddBookActivity.class));
+            }
+        });
+
+
 
     }
 

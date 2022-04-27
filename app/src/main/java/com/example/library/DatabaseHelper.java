@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String DB_NAME = "library.db";
     private static String DB_PATH = "";
-    private static final int DB_VERSION = 9;
+    private static final int DB_VERSION = 13;
 
     private SQLiteDatabase mDataBase;
     private final Context mContext;
