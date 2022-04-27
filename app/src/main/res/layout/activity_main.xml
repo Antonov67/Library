@@ -14,6 +14,13 @@
          android:layout_gravity="center"
          android:text="Ваша библиотека" />
 
+     <androidx.appcompat.widget.AppCompatButton
+         android:id="@+id/addBookButton"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="left"
+         android:text="добавить книгу" />
+
      <TextView
          android:id="@+id/textView4"
          android:layout_width="match_parent"
@@ -26,11 +33,14 @@
          android:layout_height="wrap_content"
          android:ems="10"
          android:inputType="textPersonName"
-         android:text="" />
+         android:text=""
+         tools:ignore="TouchTargetSizeCheck" />
 
      <androidx.recyclerview.widget.RecyclerView
          android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:id="@+id/listView"/>
+         android:layout_height="wrap_content"
+         android:id="@+id/listView">
+
+     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

@@ -7,6 +7,9 @@ public class Book implements Serializable {
     private String title;
     private String author;
     private String annotation;
+    private int pageCount;
+    private String yearOfPubl;
+    private boolean wish;
 
     public void setId(int id) {
         this.id = id;
@@ -36,9 +39,7 @@ public class Book implements Serializable {
         this.wish = wish;
     }
 
-    private int pageCount;
-    private String yearOfPubl;
-    private boolean wish;
+
 
     public Book(int id, String title, String author, String annotation, int pageCount, String yearOfPubl, boolean wish) {
         this.id = id;

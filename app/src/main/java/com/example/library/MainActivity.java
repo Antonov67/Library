@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterForMainActivity.ItemClickListener {
     ArrayList<Book> bookList;
     EditText searchField;
+    Button addBook;
     //список для хранения полного списка книг, нужен для поиска с пустым запросом
     static ArrayList<Book> totalList = new ArrayList<>();
 
@@ -33,6 +35,13 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        addBook = findViewById(R.id.addBookButton);
+        addBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,AddBookActivity.class));
+            }
+        });
 
         String sql = "SELECT * FROM books";
         Cursor cursor = DB.getDataFromBD(sql, this);
