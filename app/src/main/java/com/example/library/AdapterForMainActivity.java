@@ -29,6 +29,13 @@ public class AdapterForMainActivity extends RecyclerView.Adapter<AdapterForMainA
 
     }
 
+
+    //метод обновления сожержимого адаптера
+    public void updateAdapter(ArrayList<Book> books){
+        this.list.clear();
+        this.list.addAll(books);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -90,14 +97,11 @@ public class AdapterForMainActivity extends RecyclerView.Adapter<AdapterForMainA
                 }
             });
             itemView.setOnClickListener(this);
-
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-
-
         }
     }
 
@@ -110,5 +114,5 @@ public class AdapterForMainActivity extends RecyclerView.Adapter<AdapterForMainA
     }
     public interface ItemClickListener {
         void onItemClick(View view, int position);
-    }
+        }
 }

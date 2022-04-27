@@ -26,13 +26,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterForMainActivity.ItemClickListener {
     ArrayList<Book> bookList;
     EditText searchField;
+    //список для хранения полного списка книг, нужен для поиска с пустым запросом
+    static ArrayList<Book> totalList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         String sql = "SELECT * FROM books";
         Cursor cursor = DB.getDataFromBD(sql, this);
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
             cursor.moveToNext();
         }
         cursor.close();
-      //  Log.d("lib777", bookList.toString());
+
 
        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listView);
        recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -64,16 +64,23 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
        adapter.setClickListener(this);
        recyclerView.setAdapter(adapter);
 
+        //сохраним данные для возврата полного набора данных при необходимости
+        totalList.addAll(bookList);
+
         searchField = findViewById(R.id.searchField);
         searchField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                bookList = queryBookList(charSequence);
-                adapter.notifyDataSetChanged();
+
             }
 
+            //при вводе символов в поле ввода, применям фильтр
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                ArrayList<Book> books = queryBookList(charSequence);
+                adapter.updateAdapter(books);
+                recyclerView.getAdapter().notifyDataSetChanged();
+
 
             }
 
@@ -93,8 +100,26 @@ public class MainActivity extends AppCompatActivity implements AdapterForMainAct
         startActivity(intent);
     }
 
+    //если искомые символы содержатся в авторе, названии или аннотации, то делаем фильтр, создаем
+    // новый список книг, если же запрос пустой, то выводим полный список из переменной totalList
     public ArrayList<Book> queryBookList(CharSequence charSequence){
-        return new ArrayList<Book>();
+        Log.d("lib777","in " +  bookList.toString());
+        Log.d("lib777", "chars " +  charSequence.toString());
+        ArrayList<Book> books = new ArrayList<>();
+        if (charSequence.length() != 0) {
+            for (Book book : bookList) {
+                if (book.getAuthor().contains(charSequence.toString())
+                        || book.getTitle().contains(charSequence.toString())
+                        || book.getAnnotation().contains(charSequence.toString())) {
+                    books.add(book);
+                }
+            }
+        }else {
+
+            books.addAll(totalList);
+        }
+        return books;
+
 
     }
 }

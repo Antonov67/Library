@@ -8,6 +8,30 @@ public class Book implements Serializable {
     private String author;
     private String annotation;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public void setYearOfPubl(String yearOfPubl) {
+        this.yearOfPubl = yearOfPubl;
+    }
+
     public void setWish(boolean wish) {
         this.wish = wish;
     }
